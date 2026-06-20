@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import sys; sys.path.insert\\(0,'c:/Users/14773/Desktop/training/fastapi'\\); import schemas; print\\('OK', schemas.AgentRequest.__name__\\)\")"
+    ]
+  }
+}

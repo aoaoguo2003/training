@@ -1,0 +1,10 @@
+{
+  "total_calls": 3,
+  "success_count": 2,
+  "failure_count": 1,
+  "total_latency": 4.3,
+  "unique_tools": [
+    "search",
+    "weather"
+  ]
+}

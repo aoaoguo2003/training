@@ -1,0 +1,5 @@
+[
+  {"tool": "search", "latency": 1.2, "success": true},
+  {"tool": "weather", "latency": 2.3, "success": false},
+  {"tool": "search", "latency": 0.8, "success": true}
+]
