@@ -60,6 +60,7 @@ def analyse_tool_results(results: list[dict]) ->dict:
     success_count = 0
     fail_count = 0
     fail_tools = []
+    timeout_count = 0
 
     for result in results:
         if result["success"]:
@@ -68,13 +69,17 @@ def analyse_tool_results(results: list[dict]) ->dict:
             fail_count += 1
             fail_tools.append(result["tool_name"])
 
+            if result["error_type"] == "TIMEOUT":
+                timeout_count += 1
+    
 
 
     return {
         "total_tools": len(results),
         "success_count": success_count,
         "failure_count": fail_count,
-        "failed_tools": fail_tools
+        "failed_tools": fail_tools,
+        "timeout_count": timeout_count
     }
 
 
