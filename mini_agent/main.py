@@ -4,6 +4,7 @@ import logging
 from agent import run_agent
 import asyncio
 from schemas import UserRequest
+from response import analysis_tool_results
 
 
 logging.basicConfig(
@@ -21,12 +22,18 @@ async def agent_run(request: UserRequest):
         request_id = request.request_id,
         message = request.message
     )
-    return result
-
+    summary = analysis_tool_results(result["tool_results"])
+    return {
+        "result": result, 
+        "summary": summary
+    }
 
 async def main():
     results = await run_agent("user001", "please check the weather and use the calculator")
+    response = analysis_tool_results(results["tool_results"])
     print(results)
+    print(response)
+
 
 if  __name__ == "__main__":
     asyncio.run(main())

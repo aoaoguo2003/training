@@ -5,12 +5,12 @@ async def weather_tool(request_id: str, message: str):
 
     return {
         "request_id": request_id,
-        "tool_name": ":weather",
+        "tool_name": "weather",
         "result": f"the weather of {message} toady is sunny"#暂时这样
     }
 
 async def calculator_tool(request_id: str, message:str):
-    await asyncio.sleep(1)
+    await asyncio.sleep(2)
 
     return {
         "request_id": request_id,

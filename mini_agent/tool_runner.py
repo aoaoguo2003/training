@@ -2,6 +2,15 @@ from tools import TOOL_REGISTRY
 import asyncio
 import time
 
+tool_semaphore = asyncio.Semaphore(3)
+
+async def call_tool_once(tool_function, query:str, timeout:float):
+    async with tool_semaphore:
+        return await asyncio.wait_for(
+            tool_function(query),
+            timeout=timeout
+        )
+
 async def call_tool_with_retry(request_id, tool_name, query, timeout, max_attempts):
     if tool_name not in TOOL_REGISTRY:
         return {
@@ -19,9 +28,10 @@ async def call_tool_with_retry(request_id, tool_name, query, timeout, max_attemp
 
     for attempt in range(1, max_attempts +1):
         try:
-            result = await asyncio.wait_for(
-                tool_function(request_id, query),
-                timeout = timeout
+            result = await call_tool_once(
+                tool_function=tool_function,
+                query=query,
+                timeout=timeout
             )
 
             latency = time.perf_counter() - start_time
@@ -68,6 +78,7 @@ async def call_tool_with_retry(request_id, tool_name, query, timeout, max_attemp
                 "attempts": attempt,
                 "latency": round(latency, 2)
             }
+
 
 
 
